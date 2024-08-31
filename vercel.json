@@ -5,23 +5,32 @@
             "dest":"/"
         },
         {
-            "src":"/profile",
+            "src":"/buses",
             "dest":"/"
         },
         {
-            "src":"/select-bus",
+            "src":"/add-buses",
             "dest":"/"
         },
         {
-            "src":"/login",
+            "src":"/trips",
             "dest":"/"
         },
         {
-            "src":"/register",
+            "src":"/add-trips",
             "dest":"/"
         },
         {
-            "src":"/payment",
+            "src":"/bookings",
+            "dest":"/"
+        }
+        ,
+        {
+            "src":"/users",
+            "dest":"/"
+        },
+        {
+            "src":"/reports",
             "dest":"/"
         }
     ]
