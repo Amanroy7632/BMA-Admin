@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { BASE_URl } from "../constraints";
+import { toast } from "react-toastify";
 
 function TripsPage() {
   const [trips, setTrips] = useState([]);
@@ -20,18 +21,29 @@ function TripsPage() {
       });
   }, []);
 
-  const handleDelete = (tripId) => {
+  const handleDelete = async(tripId) => {
     // Call API to delete trip
-    axios.delete(`/api/trips/${tripId}`)
-      .then(() => {
-        // Remove deleted trip from state
+    try {
+      const response = await axios.delete(`${BASE_URl}/routes/${tripId}`);
+      if (response.status === 200)  {
+        toast.success("Route deleted successfully")
         setTrips((prevTrips) => 
           prevTrips.filter((trip) => trip.id !== tripId)
         );
-      })
-      .catch((error) => {
-        console.error("Error deleting trip:", error);
-      });
+      }
+    } catch (error) {
+      console.error("Error deleting trip:", error);
+    }
+    // axios.delete(`${BASE_URl}/routes/${tripId}`)
+    //   .then(() => {
+    //     // Remove deleted trip from state
+    //     setTrips((prevTrips) => 
+    //       prevTrips.filter((trip) => trip.id !== tripId)
+    //     );
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error deleting trip:", error);
+    //   });
   };
 
   return (
@@ -63,7 +75,7 @@ function TripsPage() {
                   Edit
                 </button>
                 <button 
-                  onClick={() => handleDelete(trip.id)}
+                  onClick={() => handleDelete(trip._id)}
                   className="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600 ml-2">
                   Delete
                 </button>
@@ -72,6 +84,9 @@ function TripsPage() {
           ))}
         </tbody>
       </table>
+      <div className=" my-5 text-lg">
+        Total trips: <strong>{trips.length}</strong>
+      </div>
       {loading && <Loader/>}
     </div>
   );

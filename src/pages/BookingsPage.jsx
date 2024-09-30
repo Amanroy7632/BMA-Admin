@@ -76,6 +76,9 @@ function BookingsPage() {
           ))}
         </tbody>
       </table>
+      <div>
+        Total Bokings: <strong>{bookings.length}</strong>
+      </div>
       {loading&& <Loader/>}
       {/* {loading && <Spinner/>} */}
     </div>

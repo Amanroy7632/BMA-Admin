@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import DashboardPage from "./pages/DashboardPage";
-const DashboardPage = React.lazy(()=>import("./pages/DashboardPage"))
+const DashboardPage = React.lazy(() => import("./pages/DashboardPage"));
 import BusesPage from "./pages/BusesPage";
 import TripsPage from "./pages/TripsPage";
 import BookingsPage from "./pages/BookingsPage";
@@ -10,17 +10,22 @@ import AdminRoute from "./components/AdminRoute";
 import AddBusPage from "./pages/AddBusPage";
 import Loader from "./components/Loader";
 import UsersPage from "./pages/UsersPage";
+import PageNotFound from "./pages/PageNotFound";
+import AdminLogin from "./pages/AdminLoginPage";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<AdminLogin/>} />
+        <Route path="/reset" element={<ResetPassword/>} />
         <Route
-          path="/"
+          path="/dashboard"
           element={
             <AdminRoute>
-              <Suspense fallback={<Loader/>}>
-              <DashboardPage />
+              <Suspense fallback={<Loader />}>
+                <DashboardPage />
               </Suspense>
             </AdminRoute>
           }
@@ -69,11 +74,18 @@ function App() {
           path="/users"
           element={
             <AdminRoute>
-              <UsersPage/>
+              <UsersPage />
             </AdminRoute>
           }
         />
-        <Route path="*" element={<div>404 Page not found </div>}/>
+        <Route
+          path="*"
+          element={
+            <AdminRoute>
+              <PageNotFound />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </Router>
   );

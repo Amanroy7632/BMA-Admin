@@ -325,10 +325,10 @@ function AddBusPage() {
           </div>
         </div>
 
-        <div className="m-auto w-[80%]">
+        <div className=" w-[80%]">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+            className=" min-w-[50%] bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
           >
             Add Bus
           </button>

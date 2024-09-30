@@ -16,7 +16,8 @@ import {
   MdDashboard,
   MdReport,
 } from "react-icons/md";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const AdminRoute = ({ children }) => {
   const { isAdmin } = useAuthContext();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,6 +28,7 @@ const AdminRoute = ({ children }) => {
 
   return isAdmin ? (
     <>
+        <ToastContainer/>
       <div className="flex relative min-h-screen">
 
         {/* Sidebar */}
