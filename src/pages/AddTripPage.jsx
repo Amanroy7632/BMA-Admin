@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
 import { BASE_URl } from "../constraints";
+import { toast } from "react-toastify";
+import Button from "../components/common/Button";
 
 
 function AddTripPage() {
@@ -31,7 +33,6 @@ function AddTripPage() {
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    // Call API to add a new trip
     try {
       const data = {
         ...formData,
@@ -52,19 +53,30 @@ function AddTripPage() {
       // console.log(response.data);
 
       if (response.status === 200) {
-        alert("Route added successfully");
+        toast.success("Route added successfully")
+        setFormData({
+          busId: "", // Added busId field
+          departureLocation: "",
+          busname: "",
+          busNo: "",
+          fare: "",
+          arrivalLocation: "",
+          departureTime: "",
+          arrivalTime: "",
+        })
       }
-      setFormData({
-        busId: "", // Added busId field
-        departureLocation: "",
-        busname: "",
-        busNo: "",
-        fare: "",
-        arrivalLocation: "",
-        departureTime: "",
-        arrivalTime: "",
-      })
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      if (error.status===401) {
+        toast.error("All Fields are required.")
+      }
+      if (error.status===500) {
+        toast.error("Service unavailable")
+      }
+      if (error.status===409&& error.code==="ERR_BAD_REQUEST") {
+        toast.error("Route already exists.");
+      }
+    }
      finally{
       setLoading(false)
      }
@@ -262,15 +274,17 @@ function AddTripPage() {
         </div>
 
         <div className=" m-auto w-[80%]">
-          <button
+          <Button
             type="submit"
+            disabled={loading}
+            isLoading={loading}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
           >
-            Add Trip
-          </button>
+            {loading?"Adding...":"Add Trip"}
+          </Button>
         </div>
       </form>
-      {loading &&<div className=" absolute flex w-full h-full items-center justify-center top-0 left-0 bg-[rgb(0,0,0,0.1)]"><Loader/></div>  }
+      {/* {loading &&<div className=" absolute flex w-full h-full items-center justify-center top-0 left-0 bg-[rgb(0,0,0,0.1)]"><Loader/></div>  } */}
     </div>
   );
 }

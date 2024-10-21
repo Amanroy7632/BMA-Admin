@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import Loader from "../Loader";
+
+import Button from "../common/Button";
 import { BASE_URl } from "../../constraints";
 import { toast } from "react-toastify";
 
@@ -14,8 +15,11 @@ function TripUpdateForm({ prevData ,onClose }) {
     formState: { errors },
   } = useForm({ defaultValues: prevData });
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
         const response = await axios.patch(`${BASE_URl}/routes/update/${prevData._id}`,data);
+        console.log(data);
+        
         if (response.status===200) {
             toast.success("Trip updated successfully");
             console.log(response.data);
@@ -24,9 +28,11 @@ function TripUpdateForm({ prevData ,onClose }) {
         }
     } catch (error) {
         toast.error("Failed to update trip.")
+    }finally{
+        setLoading(false);
     }
   };
-  console.log(prevData);
+//   console.log(prevData);
 
 
 
@@ -208,12 +214,15 @@ function TripUpdateForm({ prevData ,onClose }) {
           >
             Cancel
           </button>
-          <button
+          <Button
             type="submit"
+            isLoading={loading}
+            disabled={loading}
             className=" bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
           >
-            Save
-          </button>
+            {loading?"Saving...":"Save"}
+            
+          </Button>
         </div>
       </form>
 

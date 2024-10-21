@@ -14,7 +14,7 @@ function TripsPage() {
     axios
       .get(`${BASE_URl}/routes/get-all-routes`)
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         setTrips(response.data?.data);
         setLoading(false);
       })
@@ -70,7 +70,7 @@ function TripsPage() {
           </tr>
         </thead>
         <tbody>
-          {trips.map((trip) => (
+          { trips.length>0&& trips?.map((trip) => (
             <tr key={trip._id}>
               <td className="p-2 max-sm:p-2  border-y-2">
                 {trip._id?.substring(0, 5)}
