@@ -68,23 +68,6 @@ function AddTripPage() {
      finally{
       setLoading(false)
      }
-    // axios.post("/api/trips", formData)
-    //   .then((response) => {
-    //     alert("Trip added successfully!");
-    //     // Reset form after successful submission
-    //     setFormData({
-    //       busId: "", // Reset busId field,
-    //       busname:"",
-    //       fromLocation: "",
-    //       toLocation: "",
-    //       departureTime: "",
-    //       arrivalTime: "",
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error adding trip:", error);
-    //     alert("Failed to add trip. Please try again.");
-    //   });
   };
 
   const fetchBusData = async () => {
